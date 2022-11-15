@@ -17,6 +17,12 @@ module.exports = {
       },
       accountId: {
         type: Sequelize.INTEGER,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Accounts',
+          key: 'id',
+        },
         field: 'account_id',
       },
     });
