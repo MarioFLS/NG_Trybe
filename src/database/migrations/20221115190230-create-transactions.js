@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Transactions', {
+    await queryInterface.createTable('transactions', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,7 +14,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'Accounts',
+          model: 'accounts',
           key: 'id',
         },
         field: 'debited_account_id',
@@ -24,12 +24,13 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'Accounts',
+          model: 'accounts',
           key: 'id',
         },
         field: 'credited_Account_Id',
       },
       value: {
+        allowNull: false,
         type: Sequelize.DECIMAL,
       },
       createdAt: {
@@ -39,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Transactions');
+    await queryInterface.dropTable('transactions');
   },
 };

@@ -14,7 +14,7 @@ Transactions.init(
   },
   {
     sequelize: db,
-    modelName: 'Transactions',
+    modelName: 'transactions',
     underscored: true,
   }
 );

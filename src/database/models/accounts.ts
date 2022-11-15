@@ -4,14 +4,17 @@ class Accounts extends Model {}
 Accounts.init(
   {
     id: {
-      type: INTEGER,
+      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
+      type: INTEGER,
     },
     balance: DECIMAL,
   },
   {
     sequelize: db,
-    modelName: 'Accounts',
+    modelName: 'accounts',
+    timestamps: false,
   }
 );
 

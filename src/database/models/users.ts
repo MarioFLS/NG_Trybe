@@ -5,15 +5,17 @@ class Users extends Model {}
 Users.init(
   {
     id: {
-      type: INTEGER,
+      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
+      type: INTEGER,
     },
     username: STRING,
     password: STRING,
     accountId: INTEGER,
   },
   {
-    modelName: 'Users',
+    modelName: 'users',
     timestamps: false,
     sequelize: db,
     underscored: true,
