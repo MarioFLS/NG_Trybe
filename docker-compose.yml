@@ -38,7 +38,7 @@ services:
     # na notação porta_de_fora:porta_de_dentro
     ports:
       # Expõe a porta padrão do banco de dados
-      - 5432:5432
+      - 5430:5432
     environment:
       POSTGRES_PASSWORD: password
       DB_USERNAME: root
