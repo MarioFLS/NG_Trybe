@@ -17,6 +17,7 @@ module.exports = {
       },
       accountId: {
         type: Sequelize.INTEGER,
+        field: 'account_id',
       },
     });
   },
