@@ -4,18 +4,17 @@ import IErrorResponse from '../interfaces/IErrorResponse';
 import ICreateUser from '../interfaces/ICreateUser';
 import Accounts from '../database/models/accounts';
 import db from '../database/models';
+import { validateCreateUser } from './validateUser';
 
 const createUser = async (
   data: ICreateUser
-): Promise<Users | IErrorResponse | void> => {
-  if (!data) {
-    return {
-      error: {
-        code: StatusCodes.NOT_FOUND,
-        message: 'Insira os dados do User',
-      },
-    };
-  }
+): Promise<Users | IErrorResponse> => {
+  const { username, password } = data;
+
+  const validate = (await validateCreateUser(data)) as IErrorResponse;
+  const validateError = validate?.error;
+
+  if (validateError) return validate;
 
   try {
     return await db.transaction(async (t) => {
@@ -24,7 +23,7 @@ const createUser = async (
       ).dataValues.id;
 
       const user = await Users.create(
-        { ...data, account_id: account },
+        { username: username.trim(), password, account_id: account },
         { transaction: t }
       );
       return user;
