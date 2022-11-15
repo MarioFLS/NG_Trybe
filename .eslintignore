@@ -1,0 +1,15 @@
+# Arquivos De Build
+node_modules
+.sequelizerc
+tsconfig.json
+.eslintrc.json
+.github
+
+# Arquivos feito pela biblioteca do Typescript
+dist
+
+# Arquivos de teste
+test
+
+#Swagger
+docs
