@@ -25,7 +25,6 @@ module.exports = {
           model: 'accounts',
           key: 'id',
         },
-        field: 'account_id',
       },
     });
   },
