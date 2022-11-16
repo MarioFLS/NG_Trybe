@@ -1,5 +1,6 @@
 import { Model, INTEGER, DECIMAL } from 'sequelize';
 import db from './index';
+
 class Accounts extends Model {}
 Accounts.init(
   {
