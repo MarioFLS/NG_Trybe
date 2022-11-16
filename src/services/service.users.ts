@@ -6,7 +6,7 @@ import IErrorResponse from '../interfaces/IErrorResponse';
 import ICreateUser from '../interfaces/ICreateUser';
 import Accounts from '../database/models/accounts';
 import db from '../database/models';
-import validateCreateUser from './validateUser';
+import validateCreateUser from './validate.user';
 import hashPasswordDB from '../helpers/hashPassword';
 import ILogin from '../interfaces/ILogin';
 import findByUsername from '../helpers/searchDatabase';
