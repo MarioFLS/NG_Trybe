@@ -32,7 +32,7 @@ const createUser = async (
         },
         { transaction: t }
       );
-      return user;
+      return user.toJSON();
     });
   } catch (error) {
     return {
