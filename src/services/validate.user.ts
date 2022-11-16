@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import findByUsername from '../helpers/searchDatabase';
+import findByUsername from '../helpers/utilsDatabase';
 import ICreateUser from '../interfaces/ICreateUser';
 
 const validateCreateUser = async (data: ICreateUser) => {

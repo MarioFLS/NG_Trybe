@@ -9,7 +9,7 @@ import db from '../database/models';
 import validateCreateUser from './validate.user';
 import hashPasswordDB from '../helpers/hashPassword';
 import ILogin from '../interfaces/ILogin';
-import findByUsername from '../helpers/searchDatabase';
+import findByUsername from '../helpers/utilsDatabase';
 import IUser from '../interfaces/IUser';
 
 const SECRET = process.env.SECRET || 'chaveMuitoScreteta';

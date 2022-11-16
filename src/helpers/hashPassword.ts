@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import ILogin from '../interfaces/ILogin';
 import IUser from '../interfaces/IUser';
-import findByUsername from './searchDatabase'
+import findByUsername from './utilsDatabase'
 
 const salt = bcrypt.genSaltSync(10);
 
