@@ -28,6 +28,10 @@ const login = async (req: Request, res: Response): Promise<Response> => {
 const getBalance = async (account: IToken, req: Request, res: Response, _: NextFunction)
   : Promise<Response> => {
   const response = await findByAccount(account.accountId);
+  if (!response) {
+    return res.status(StatusCodes.UNAUTHORIZED)
+      .json({ message: 'Token do usuário Inválido' });
+  }
   return res.status(StatusCodes.OK).json(response);
 };
 

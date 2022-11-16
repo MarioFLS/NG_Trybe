@@ -27,7 +27,7 @@ const userCashOut = async (token: IToken, data: Data) => {
     };
   }
   try {
-    updateBalance(token, username, value);
+    await updateBalance(token, username, value);
   } catch (error) {
     return {
       error: {

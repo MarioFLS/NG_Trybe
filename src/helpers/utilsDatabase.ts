@@ -3,6 +3,7 @@ import Accounts from '../database/models/accounts';
 import Users from '../database/models/users';
 import IToken from '../interfaces/IToken';
 import db from '../database/models';
+import Transactions from '../database/models/transactions';
 
 const findByUsername = async (username: string) => Users.findOne({ where: { username } });
 
@@ -19,7 +20,12 @@ const updateBalance = async (token:IToken, username: string, balance: number) =>
       { where: { id: token.accountId }, transaction: t }
     );
 
-    return Accounts.increment({ balance }, { where: { id }, transaction: t });
+    await Accounts.increment({ balance }, { where: { id }, transaction: t });
+    return Transactions
+      .create(
+        { debitedAccountId: token.accountId, creditedAccountId: id, value: balance },
+        { transaction: t }
+      ).catch((e) => console.log(e))
   })
 }
 
