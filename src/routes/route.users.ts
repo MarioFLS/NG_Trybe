@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getBalance, create, login, cashOut
+  getBalance, create, login, cashOut, transactions
 } from '../controllers/users';
 import validateLogin from '../middleware/validate.login';
 import validateToken from '../middleware/validate.token';
@@ -11,5 +11,6 @@ userRouter.post('/', create);
 userRouter.post('/login', validateLogin, login);
 userRouter.get('/balance', validateToken, getBalance);
 userRouter.post('/cashOut', validateToken, cashOut)
+userRouter.get('/transactions', validateToken, transactions)
 
 export default userRouter;

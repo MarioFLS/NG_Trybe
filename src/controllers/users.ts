@@ -5,6 +5,7 @@ import IErrorResponse from '../interfaces/IErrorResponse';
 import IToken from '../interfaces/IToken';
 import IUser from '../interfaces/IUser';
 import { userCashOut } from '../services/service.balance';
+import transactionHistory from '../services/service.transactions';
 import { createUser, loginUser } from '../services/service.users';
 
 const create = async (
@@ -48,6 +49,12 @@ const cashOut = async (account: IToken, req: Request, res: Response, next: NextF
   return res.status(StatusCodes.ACCEPTED).json()
 }
 
+const transactions = async (account: IToken, req: Request, res: Response, _: NextFunction)
+  : Promise<Response | void> => {
+  const historic = await transactionHistory(account.id);
+  return res.status(StatusCodes.OK).json(historic)
+}
+
 export {
-  create, login, getBalance, cashOut
+  create, login, getBalance, cashOut, transactions
 };
