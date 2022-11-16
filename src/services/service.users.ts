@@ -35,7 +35,7 @@ const createUser = async (
         {
           username: username.trim(),
           password: hashPassword,
-          account_id: account,
+          accountId: account,
         },
         { transaction: t }
       );
@@ -53,8 +53,8 @@ const createUser = async (
 
 const loginUser = async (data: ILogin) => {
   const { username } = data;
-  const { accountId } = await findByUsername(username) as unknown as IUser;
-  return jwt.sign({ username, accountId }, SECRET, { expiresIn: '24h' });
+  const { accountId, id } = await findByUsername(username) as unknown as IUser;
+  return jwt.sign({ username, accountId, id }, SECRET, { expiresIn: '24h' });
 };
 
 export { createUser, loginUser };
