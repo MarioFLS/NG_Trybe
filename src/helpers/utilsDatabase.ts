@@ -13,9 +13,13 @@ const updateBalance = async (token:IToken, username: string, balance: number) =>
   const user = await findByUsername(username);
   const id = user?.dataValues.account_id
 
-  await db.transaction(async (t) => {
-    Accounts.increment({ balance }, { where: { id }, transaction: t });
-    Accounts.decrement({ balance }, { where: { id: token.accountId }, transaction: t });
+  return db.transaction(async (t) => {
+    await Accounts.decrement(
+      { balance },
+      { where: { id: token.accountId }, transaction: t }
+    );
+
+    return Accounts.increment({ balance }, { where: { id }, transaction: t });
   })
 }
 
