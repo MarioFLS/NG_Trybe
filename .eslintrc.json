@@ -25,6 +25,7 @@
   "rules": {
     "semi": "off",
     "@typescript-eslint/semi": "off",
+    "eslint no-extra-semi": "off",
     "comma-dangle": "off",
     "max-len": ["error", { "code": 90, "ignoreUrls": true, "ignoreComments": true }],
     "no-unreachable": "error",
