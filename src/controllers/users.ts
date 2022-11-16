@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { findByAccount } from '../helpers/searchDatabase';
-import IAccount from '../interfaces/IAccount';
+import findByUsername, { findByAccount } from '../helpers/utilsDatabase';
 import IErrorResponse from '../interfaces/IErrorResponse';
+import IToken from '../interfaces/IToken';
 import IUser from '../interfaces/IUser';
+import { userCashOut } from '../services/service.balance';
 import { createUser, loginUser } from '../services/service.users';
 
 const create = async (
@@ -24,10 +25,25 @@ const login = async (req: Request, res: Response): Promise<Response> => {
   return res.status(StatusCodes.CREATED).json({ token });
 };
 
-const getBalance = async (account: IUser, req: Request, res: Response, _: NextFunction)
+const getBalance = async (account: IToken, req: Request, res: Response, _: NextFunction)
   : Promise<Response> => {
   const response = await findByAccount(account.accountId);
   return res.status(StatusCodes.OK).json(response);
 };
 
-export { create, login, getBalance };
+const cashOut = async (account: IToken, req: Request, res: Response, next: NextFunction)
+  : Promise<Response | void> => {
+  const receiverUser = await findByUsername(req.body.username);
+  if (!receiverUser) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não existe' })
+  }
+  const user = await userCashOut(account, req.body);
+  const userError = user as IErrorResponse;
+  if (userError?.error) return next(user);
+
+  return res.status(StatusCodes.ACCEPTED).json()
+}
+
+export {
+  create, login, getBalance, cashOut
+};
