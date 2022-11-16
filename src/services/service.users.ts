@@ -5,6 +5,7 @@ import ICreateUser from '../interfaces/ICreateUser';
 import Accounts from '../database/models/accounts';
 import db from '../database/models';
 import { validateCreateUser } from './validateUser';
+import { hashPasswordDB } from '../helpers/hashPassword';
 
 const createUser = async (
   data: ICreateUser
@@ -14,6 +15,7 @@ const createUser = async (
   const validate = (await validateCreateUser(data)) as IErrorResponse;
   const validateError = validate?.error;
 
+  const hashPassword = hashPasswordDB(password);
   if (validateError) return validate;
 
   try {
@@ -23,7 +25,11 @@ const createUser = async (
       ).dataValues.id;
 
       const user = await Users.create(
-        { username: username.trim(), password, account_id: account },
+        {
+          username: username.trim(),
+          password: hashPassword,
+          account_id: account,
+        },
         { transaction: t }
       );
       return user;
