@@ -1,11 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
-import findUsername from '../helpers/searchDatabase';
+import findByUsername from '../helpers/searchDatabase';
 import ICreateUser from '../interfaces/ICreateUser';
 
 const validateCreateUser = async (data: ICreateUser) => {
   const { username, password } = data;
 
-  const usernameValidate = await findUsername(username);
+  const usernameValidate = await findByUsername(username);
 
   if (usernameValidate) {
     return {
