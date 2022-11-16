@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { findUsername } from '../helpers/searchDatabase';
+import findUsername from '../helpers/searchDatabase';
 import ICreateUser from '../interfaces/ICreateUser';
 
 const validateCreateUser = async (data: ICreateUser) => {
@@ -34,9 +34,8 @@ const validateCreateUser = async (data: ICreateUser) => {
     };
   }
 
-  //Regex usado forum: https://pt.stackoverflow.com/questions/373574/regex-para-senha-forte
-  const validate =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?:([0-9a-zA-Z])(?!\1)){8,}$/gm;
+  // Regex usado forum: https://pt.stackoverflow.com/questions/373574/regex-para-senha-forte
+  const validate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?:([0-9a-zA-Z])(?!\1)){8,}$/gm;
 
   if (password.trim().length < 8) {
     return {
@@ -57,4 +56,4 @@ const validateCreateUser = async (data: ICreateUser) => {
   }
 };
 
-export { validateCreateUser };
+export default validateCreateUser;
