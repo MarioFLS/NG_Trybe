@@ -1,6 +1,7 @@
 import { Model, INTEGER, STRING } from 'sequelize';
 import Accounts from './accounts';
 import db from './index';
+
 class Users extends Model {}
 Users.init(
   {
