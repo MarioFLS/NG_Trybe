@@ -11,7 +11,7 @@ const findByAccount = async (accountId: number) => Accounts
 
 const updateBalance = async (token:IToken, username: string, balance: number) => {
   const user = await findByUsername(username);
-  const id = user?.dataValues.account_id
+  const id = user?.dataValues.accountId
 
   return db.transaction(async (t) => {
     await Accounts.decrement(
