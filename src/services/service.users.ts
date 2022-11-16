@@ -9,6 +9,8 @@ import db from '../database/models';
 import validateCreateUser from './validateUser';
 import hashPasswordDB from '../helpers/hashPassword';
 import ILogin from '../interfaces/ILogin';
+import findByUsername from '../helpers/searchDatabase';
+import IUser from '../interfaces/IUser';
 
 const SECRET = process.env.SECRET || 'chaveMuitoScreteta';
 
@@ -49,10 +51,10 @@ const createUser = async (
   }
 };
 
-const loginUser = (data: ILogin) => {
+const loginUser = async (data: ILogin) => {
   const { username } = data;
-
-  return jwt.sign({ username }, SECRET, { expiresIn: '24h' });
+  const { accountId } = await findByUsername(username) as unknown as IUser;
+  return jwt.sign({ username, accountId }, SECRET, { expiresIn: '24h' });
 };
 
 export { createUser, loginUser };
