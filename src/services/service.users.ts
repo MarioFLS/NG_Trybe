@@ -1,11 +1,16 @@
 import { StatusCodes } from 'http-status-codes';
+import 'dotenv/config';
+import jwt from 'jsonwebtoken';
 import Users from '../database/models/users';
 import IErrorResponse from '../interfaces/IErrorResponse';
 import ICreateUser from '../interfaces/ICreateUser';
 import Accounts from '../database/models/accounts';
 import db from '../database/models';
-import { validateCreateUser } from './validateUser';
-import { hashPasswordDB } from '../helpers/hashPassword';
+import validateCreateUser from './validateUser';
+import hashPasswordDB from '../helpers/hashPassword';
+import ILogin from '../interfaces/ILogin';
+
+const SECRET = process.env.SECRET || 'chaveMuitoScreteta';
 
 const createUser = async (
   data: ICreateUser
@@ -44,4 +49,10 @@ const createUser = async (
   }
 };
 
-export { createUser };
+const loginUser = (data: ILogin) => {
+  const { username } = data;
+
+  return jwt.sign({ username }, SECRET, { expiresIn: '24h' });
+};
+
+export { createUser, loginUser };
