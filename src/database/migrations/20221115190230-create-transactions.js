@@ -16,7 +16,6 @@ module.exports = {
           model: 'accounts',
           key: 'id',
         },
-        field: 'debited_account_id',
       },
       creditedAccountId: {
         type: Sequelize.INTEGER,
@@ -26,7 +25,6 @@ module.exports = {
           model: 'accounts',
           key: 'id',
         },
-        field: 'credited_Account_Id',
       },
       value: {
         allowNull: false,
