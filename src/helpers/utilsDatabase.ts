@@ -1,4 +1,3 @@
-import { StatusCodes } from 'http-status-codes';
 import Accounts from '../database/models/accounts';
 import Users from '../database/models/users';
 import IToken from '../interfaces/IToken';
