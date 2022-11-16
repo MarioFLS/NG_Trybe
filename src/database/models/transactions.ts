@@ -1,4 +1,6 @@
-import { Model, INTEGER, DECIMAL } from 'sequelize';
+import {
+  Model, INTEGER, DECIMAL
+} from 'sequelize';
 import db from './index';
 
 class Transactions extends Model {}
@@ -6,6 +8,7 @@ Transactions.init(
   {
     id: {
       type: INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
     debitedAccountId: INTEGER,
@@ -13,9 +16,9 @@ Transactions.init(
     value: DECIMAL,
   },
   {
+    updatedAt: false,
     sequelize: db,
     modelName: 'transactions',
-    underscored: true,
   }
 );
 

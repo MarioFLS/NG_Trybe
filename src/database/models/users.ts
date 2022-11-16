@@ -19,7 +19,6 @@ Users.init(
     modelName: 'users',
     timestamps: false,
     sequelize: db,
-    underscored: true,
   }
 );
 
