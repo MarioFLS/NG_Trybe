@@ -20,10 +20,11 @@ const createUser = async (
   const { username, password } = data;
 
   const validate = (await validateCreateUser(data)) as IErrorResponse;
-  const validateError = validate?.error;
-
   const hashPassword = hashPasswordDB(password);
-  if (validateError) return validate;
+
+  if (validate?.error) {
+    return validate
+  }
 
   try {
     return await db.transaction(async (t) => {
@@ -63,7 +64,10 @@ const loginUser = async (data: ILogin) => {
     };
   }
   const { accountId, id } = user as unknown as IUser;
-  return jwt.sign({ username, accountId, id }, SECRET, { expiresIn: '24h' });
+  const token = jwt.sign({ username, accountId, id }, SECRET, {
+    expiresIn: '24h',
+  });
+  return { token };
 };
 
 export { createUser, loginUser };
