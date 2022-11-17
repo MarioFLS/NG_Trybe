@@ -49,7 +49,11 @@ const userDepoist = async (token: IToken, balance: number) => {
       { balance },
       { where: { id: accountId }, transaction: t }
     ));
-    return Users.findOne({ where: { id }, include: { model: Accounts, as: 'account' } });
+    return Users.findOne({
+      where: { id },
+      include: { model: Accounts, as: 'account' },
+      attributes: ['username']
+    });
   } catch (error) {
     return {
       error: {
@@ -76,7 +80,11 @@ const userWithdrawal = async (token: IToken, balance: number) => {
         },
       };
     }
-    return Users.findOne({ where: { id }, include: { model: Accounts, as: 'account' } });
+    return Users.findOne({
+      where: { id },
+      include: { model: Accounts, as: 'account' },
+      attributes: ['username']
+    });
   } catch (error) {
     return {
       error: {
