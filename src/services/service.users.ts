@@ -53,7 +53,16 @@ const createUser = async (
 
 const loginUser = async (data: ILogin) => {
   const { username } = data;
-  const { accountId, id } = await findByUsername(username) as unknown as IUser;
+  const user = await findByUsername(username);
+  if (!user) {
+    return {
+      error: {
+        code: StatusCodes.BAD_REQUEST,
+        message: 'Não existe usuário com esse username',
+      },
+    };
+  }
+  const { accountId, id } = user as unknown as IUser;
   return jwt.sign({ username, accountId, id }, SECRET, { expiresIn: '24h' });
 };
 

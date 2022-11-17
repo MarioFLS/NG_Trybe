@@ -16,13 +16,20 @@ const create = async (
   const user = await createUser(req.body);
 
   const userError = user as IErrorResponse;
-  if (userError?.error) return next(user);
+  if (userError?.error) {
+    return next(userError.error)
+  }
   const { id, username } = user as unknown as IUser;
   return res.status(StatusCodes.CREATED).json({ id, username });
 };
 
-const login = async (req: Request, res: Response): Promise<Response> => {
+const login = async (req: Request, res: Response, next: NextFunction):
+  Promise<Response | void> => {
   const token = await loginUser(req.body);
+  const tokenError = token as IErrorResponse;
+  if (tokenError?.error) {
+    return next(tokenError)
+  }
   return res.status(StatusCodes.CREATED).json({ token });
 };
 
