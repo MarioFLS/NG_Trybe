@@ -51,7 +51,9 @@ const cashOut = async (account: IToken, req: Request, res: Response, next: NextF
 
 const transactions = async (account: IToken, req: Request, res: Response, _: NextFunction)
   : Promise<Response | void> => {
-  const historic = await transactionHistory(account.id);
+  const { type } = req.query;
+  const { date } = req.body;
+  const historic = await transactionHistory(account.id, type, date);
   return res.status(StatusCodes.OK).json(historic)
 }
 

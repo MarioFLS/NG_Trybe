@@ -24,7 +24,7 @@ const updateBalance = async (token:IToken, username: string, balance: number) =>
       .create(
         { debitedAccountId: token.accountId, creditedAccountId: id, value: balance },
         { transaction: t }
-      ).catch((e) => console.log(e))
+      );
   })
 }
 
