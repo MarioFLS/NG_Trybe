@@ -13,3 +13,6 @@ test
 
 #Swagger
 docs
+
+#Jest
+jest.config.ts
