@@ -4,7 +4,7 @@ import findByUsername, { findByAccount } from '../helpers/utilsDatabase';
 import IErrorResponse from '../interfaces/IErrorResponse';
 import IToken from '../interfaces/IToken';
 import IUser from '../interfaces/IUser';
-import { userCashOut } from '../services/service.balance';
+import { userCashOut, userDepoist, userWithdrawal } from '../services/service.balance';
 import transactionHistory from '../services/service.transactions';
 import { createUser, loginUser } from '../services/service.users';
 
@@ -47,7 +47,7 @@ const cashOut = async (account: IToken, req: Request, res: Response, next: NextF
   if (userError?.error) return next(user);
 
   return res.status(StatusCodes.ACCEPTED).json()
-}
+};
 
 const transactions = async (account: IToken, req: Request, res: Response, _: NextFunction)
   : Promise<Response | void> => {
@@ -55,8 +55,31 @@ const transactions = async (account: IToken, req: Request, res: Response, _: Nex
   const { date } = req.body;
   const historic = await transactionHistory(account.id, type, date);
   return res.status(StatusCodes.OK).json(historic)
-}
+};
+
+const deposit = async (account: IToken, req: Request, res: Response, _: NextFunction)
+  : Promise<Response> => {
+  const { value } = req.body;
+  console.log(req.url)
+  const response = await userDepoist(account, Number(value));
+  return res.status(StatusCodes.ACCEPTED).json(response)
+};
+
+const withdrawal = async (
+  account: IToken,
+  req: Request,
+  res: Response,
+  next: NextFunction
+)
+  : Promise<Response | void> => {
+  const { value } = req.body;
+  const response = await userWithdrawal(account, Number(value));
+  const responseError = response as IErrorResponse;
+  if (responseError) return next(responseError);
+
+  return res.status(StatusCodes.ACCEPTED).json(response)
+};
 
 export {
-  create, login, getBalance, cashOut, transactions
+  create, login, getBalance, cashOut, transactions, deposit, withdrawal
 };

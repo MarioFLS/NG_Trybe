@@ -1,6 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
+import { Op } from 'sequelize';
+import Accounts from '../database/models/accounts';
 import { findByAccount, updateBalance } from '../helpers/utilsDatabase';
+import db from '../database/models';
 import IToken from '../interfaces/IToken';
+import Users from '../database/models/users';
 
 type Data = {
   username: string;
@@ -38,4 +42,48 @@ const userCashOut = async (token: IToken, data: Data) => {
   }
 };
 
-export { userCashOut, Data }
+const userDepoist = async (token: IToken, balance: number) => {
+  const { accountId, id } = token;
+  try {
+    await db.transaction(async (t) => Accounts.increment(
+      { balance },
+      { where: { id: accountId }, transaction: t }
+    ));
+    return Users.findOne({ where: { id }, include: { model: Accounts, as: 'account' } });
+  } catch (error) {
+    return {
+      error: {
+        code: StatusCodes.NOT_ACCEPTABLE,
+        message: 'Ocorreu um Erro na transação',
+      },
+    };
+  }
+}
+
+const userWithdrawal = async (token: IToken, balance: number) => {
+  const { accountId, id } = token;
+  try {
+    const withdrawal = await db.transaction(async (t) => Accounts.decrement(
+      { balance },
+      { where: { id: accountId, balance: { [Op.gte]: balance } }, transaction: t }
+    ));
+    if (withdrawal[0]) {
+      return {
+        error: {
+          code: StatusCodes.NOT_ACCEPTABLE,
+          message: 'Você não pode tentar sacar mais dinheiro do que você tem. '
+          + 'Infelizmente',
+        },
+      };
+    }
+    return Users.findOne({ where: { id }, include: { model: Accounts, as: 'account' } });
+  } catch (error) {
+    return {
+      error: {
+        code: StatusCodes.NOT_ACCEPTABLE,
+        message: 'Ocorreu um Erro na transação',
+      },
+    };
+  }
+}
+export { userCashOut, userDepoist, userWithdrawal }

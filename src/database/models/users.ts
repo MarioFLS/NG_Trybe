@@ -22,7 +22,7 @@ Users.init(
   }
 );
 
-Users.belongsTo(Accounts, { as: 'user', foreignKey: 'id' });
-Accounts.hasOne(Users, { as: 'account', foreignKey: 'accountId' });
+Users.belongsTo(Accounts, { as: 'account', foreignKey: 'id' });
+Accounts.hasOne(Users, { as: 'user', foreignKey: 'accountId' });
 
 export default Users;
