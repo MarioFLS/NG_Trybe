@@ -9,7 +9,7 @@ const transactionHistory = async (id:number) => {
           { creditedAccountId: id }
         ]
     }
-  }).catch((e) => console.log(e));
+  });
 
   return historic;
 }
