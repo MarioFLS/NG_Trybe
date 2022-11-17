@@ -60,7 +60,6 @@ const transactions = async (account: IToken, req: Request, res: Response, _: Nex
 const deposit = async (account: IToken, req: Request, res: Response, _: NextFunction)
   : Promise<Response> => {
   const { value } = req.body;
-  console.log(req.url)
   const response = await userDepoist(account, Number(value));
   return res.status(StatusCodes.ACCEPTED).json(response)
 };
