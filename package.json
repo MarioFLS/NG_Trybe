@@ -4,10 +4,11 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "test": "DB_TEST=NG_trybe_test jest --detectOpenHandles",
+    "test": "DB_TEST=NG_trybe_test APP_PORT=3005 jest --detectOpenHandles",
     "start": "tsc && node ./dist/src/app.js",
     "restore": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "dev:test": "DB_TEST=NG_trybe_test APP_PORT=3005 nodemon"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +26,9 @@
     "express-async-errors": "^3.1.1",
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
+    "mocha": "^10.1.0",
     "nodemon": "^2.0.20",
+    "nyc": "^15.1.0",
     "pg": "^8.8.0",
     "sequelize": "^6.25.6",
     "shelljs": "^0.8.5",
