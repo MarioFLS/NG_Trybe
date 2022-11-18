@@ -6,21 +6,11 @@ const validateCreateUser = async (data: ICreateUser) => {
   const { username, password } = data;
 
   const usernameValidate = await findByUsername(username);
-
   if (usernameValidate) {
     return {
       error: {
         code: StatusCodes.BAD_REQUEST,
-        message: 'Esse usuário já existe',
-      },
-    };
-  }
-
-  if (!data) {
-    return {
-      error: {
-        code: StatusCodes.BAD_REQUEST,
-        message: 'Insira os dados do User',
+        message: 'Esse usuário já existe.',
       },
     };
   }
@@ -29,7 +19,7 @@ const validateCreateUser = async (data: ICreateUser) => {
     return {
       error: {
         code: StatusCodes.BAD_REQUEST,
-        message: 'A senha deve ter pelo menos 3 digitos',
+        message: 'O username deve ter pelo menos 3 digitos.',
       },
     };
   }
@@ -41,7 +31,7 @@ const validateCreateUser = async (data: ICreateUser) => {
     return {
       error: {
         code: StatusCodes.BAD_REQUEST,
-        message: 'A senha deve ter pelo menos 8 digitos',
+        message: 'A senha deve ter pelo menos 8 digitos.',
       },
     };
   }
@@ -50,7 +40,7 @@ const validateCreateUser = async (data: ICreateUser) => {
       error: {
         code: StatusCodes.BAD_REQUEST,
         message:
-          'A senha deve ter no minimo um número, uma letra maiuscula e uma minuscula',
+          'A senha deve ter no minimo um número, uma letra maiuscula e uma minuscula.',
       },
     };
   }

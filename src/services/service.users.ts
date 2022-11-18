@@ -46,7 +46,7 @@ const createUser = async (
     return {
       error: {
         code: StatusCodes.NOT_ACCEPTABLE,
-        message: 'Insira os dados do usuário corretamente, nome e password',
+        message: 'Erro na criação de usuário',
       },
     };
   }
