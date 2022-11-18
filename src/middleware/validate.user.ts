@@ -4,7 +4,7 @@ import { compareHashPassword } from '../helpers/hashPassword';
 
 const validateUser = async (req: Request, res: Response, next: NextFunction) => {
   const { username, password } = req.body;
-  const url = req.url === 'login';
+  const url = req.url === '/login';
 
   if (!username || !password) {
     return res.status(StatusCodes.BAD_REQUEST)
@@ -12,14 +12,13 @@ const validateUser = async (req: Request, res: Response, next: NextFunction) => 
   }
 
   if (!url) {
-    const hash = await compareHashPassword(req.body)
-    if (!hash) {
-      return res.status(StatusCodes.UNAUTHORIZED)
-        .json({ message: 'Senha ou usuário incorretos.' });
-    }
     return next();
   }
-
+  const hash = await compareHashPassword(req.body)
+  if (!hash) {
+    return res.status(StatusCodes.UNAUTHORIZED)
+      .json({ message: 'Senha ou usuário incorretos.' });
+  }
   return next();
 };
 
