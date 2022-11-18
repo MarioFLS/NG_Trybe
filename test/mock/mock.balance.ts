@@ -3,6 +3,11 @@ const balanceOne = {
   value: 20
 }
 
+const balanceTwo = {
+  username: "Marcos",
+  value: 20
+}
+
 const balanceFail = {
   username: "Jorge",
   value: 800
@@ -28,4 +33,4 @@ const tokenFail = {
   id: 1,
 }
 
-export { balanceOne, tokenValidy, tokenFail, balanceFail, depositInValidy }
+export { balanceOne, tokenValidy, tokenFail, balanceFail, depositInValidy, balanceTwo }
