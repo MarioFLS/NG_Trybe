@@ -6,8 +6,6 @@ import errorResponse from './middleware/middleware.error';
 
 const port = process.env.APP_PORT || 3002;
 
-server.get('/', (req, res) => res.status(200).send('Rodando'));
-
 server.use(userRouter);
 
 server.use(errorResponse);
