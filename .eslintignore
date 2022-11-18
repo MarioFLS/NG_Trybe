@@ -16,3 +16,6 @@ docs
 
 #Jest
 jest.config.ts
+
+#Model Index
+src/database/models/index.ts
