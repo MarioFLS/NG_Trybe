@@ -3,8 +3,6 @@ import shell from 'shelljs';
 import StatusCodes from 'http-status-codes';
 import { createUser, loginUser } from '../../src/services/service.users';
 import { failUser, fakeUser, invalidUserName, invalidUserPassword, userOne } from '../mock/mock.user';
-import IUser from '../../src/interfaces/IUser';
-import ICreateUser from '../../src/interfaces/ICreateUser';
 const { expect } = chai;
 
 beforeAll(() => shell.exec('npm run restore'));
