@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "test": "DB_TEST=NG_trybe_test APP_PORT=3005 jest --detectOpenHandles",
+    "test": "DB_TEST=NG_trybe_test APP_PORT=3005 jest --detectOpenHandles --forceExit service && DB_TEST=NG_trybe_test APP_PORT=3005 jest --detectOpenHandles controllers",
     "start": "tsc && node ./dist/src/app.js",
     "restore": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "dev": "nodemon",
