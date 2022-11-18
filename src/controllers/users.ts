@@ -38,7 +38,7 @@ const login = async (
     return next(userError);
   }
   const { token } = user;
-  return res.status(StatusCodes.CREATED).json({ token });
+  return res.status(StatusCodes.OK).json({ token });
 };
 
 const getBalance = async (
