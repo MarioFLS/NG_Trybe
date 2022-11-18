@@ -1,8 +1,12 @@
 import 'dotenv/config';
-import create from './create'
+import create from './create';
 import getBalance from './getBalance';
-import login from './login'
-import cashOut from './cashOut'
+import login from './login';
+import cashOut from './cashOut';
+import deposit from './deposit';
+import withdrawal from './withdrawal';
+import transaction from './transactions';
+
 const port = process.env.APP_PORT || 3002;
 
 const swaggerConfig = {
@@ -31,9 +35,9 @@ const swaggerConfig = {
     '/login': login,
     '/balance': getBalance,
     '/cashOut': cashOut,
-    /*'/transactions': ,
-    '/deposit:'
-    '/withdrawal': , */
+    '/deposit': deposit,
+    '/withdrawal': withdrawal ,
+    '/transactions': transaction,
   },
 };
 

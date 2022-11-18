@@ -1,6 +1,6 @@
 const login = {
   post: {
-    tags: ['Logar como Usuário'],
+    tags: ['Usuário'],
     summary:
       'Permite fazer Login como usuário e retornar um token com suas informações',
     description:

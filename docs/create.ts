@@ -1,6 +1,6 @@
 const create = {
   post: {
-    tags: ['Criar Novo Usuário'],
+    tags: ['Usuário'],
     summary:
       'Permite a criação de um novo usuário',
     description:

@@ -1,6 +1,6 @@
   const getBalance = {
   get: {
-      tags: ['Vizualizar Saldo do usuário'],
+      tags: ['Saldo'],
       security: [
         {
           bearerAuth: [],
@@ -9,16 +9,8 @@
     summary:
       'Permite Visualizar o Saldo',
     description:
-      'Após inserir os dados corretamente: username e senha, seu saldo é visualiado',
+      'Após inserir os dados corretamente: username e senha, seu saldo é visualiado.',
     produces: ['application/json'],
-    parameters: [
-      {
-        name: 'body',
-        in: 'body',
-        required: true,
-        type: 'object',
-      },
-    ],
     responses: {
       200: {
         description: 'OK',
