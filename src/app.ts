@@ -1,3 +1,5 @@
+import swaggerUI from 'swagger-ui-express';
+import swaggerConfig from '../docs/swagger'
 import server from './server';
 import 'dotenv/config';
 import 'express-async-errors';
@@ -9,4 +11,7 @@ const port = process.env.APP_PORT || 3002;
 server.use(userRouter);
 
 server.use(errorResponse);
+
+server.all('/docs', swaggerUI.serve, swaggerUI.setup(swaggerConfig));
+server.all('*', swaggerUI.serve, swaggerUI.setup(swaggerConfig));
 server.listen(port, () => console.log('Olá, você está na porta', port));
