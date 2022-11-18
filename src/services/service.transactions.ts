@@ -1,4 +1,3 @@
-import console from 'console';
 import { Op } from 'sequelize'
 import Transactions from '../database/models/transactions'
 import ITransaction from '../interfaces/ITransaction';

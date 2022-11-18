@@ -107,7 +107,7 @@ const withdrawal = async (
   const { value } = req.body;
   const response = await userWithdrawal(account, Number(value));
   const responseError = response as IErrorResponse;
-  if (responseError) return next(responseError);
+  if (responseError?.error) return next(responseError);
 
   return res.status(StatusCodes.ACCEPTED).json(response);
 };

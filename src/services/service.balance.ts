@@ -71,7 +71,8 @@ const userWithdrawal = async (token: IToken, balance: number) => {
       { balance },
       { where: { id: accountId, balance: { [Op.gte]: balance } }, transaction: t }
     ));
-    if (withdrawal[0]) {
+    const check = Number(withdrawal[0][1]);
+    if (!check) {
       return {
         error: {
           code: StatusCodes.NOT_ACCEPTABLE,
