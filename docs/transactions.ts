@@ -14,19 +14,24 @@ const transaction = {
         name: 'type',
         in: 'query',
         description:
-          'Transferências recebidas ou depositas - remova se não quiser usar',
+          'Transferências de tipo cashIn ou CashOut recebidas ou depositas - remova se não quiser usar',
         required: false,
         type: 'string',
-        example: 'in',
+        example: 'in ou out',
       },
+
       {
-        name: 'type',
-        in: 'query',
-        description:
-          'Transferências feitas ou sacadas - remova se não quiser usar',
+        name: 'body',
+        in: 'body',
         required: false,
-        type: 'string',
-        example: 'out',
+        description:
+          'Transferências por data, pode ser mesclada com as outras. Tente usar no postman ou similar. Ele não está funcionando por aqui.',
+        type: 'object',
+        properties: {
+          date: {
+            type: 'string',
+          },
+        },
       },
     ],
     responses: {
