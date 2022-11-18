@@ -5,6 +5,7 @@ import { findByAccount, updateBalance } from '../helpers/utilsDatabase';
 import db from '../database/models';
 import IToken from '../interfaces/IToken';
 import Users from '../database/models/users';
+import Transactions from '../database/models/transactions';
 
 type Data = {
   username: string;
@@ -45,10 +46,17 @@ const userCashOut = async (token: IToken, data: Data) => {
 const userDepoist = async (token: IToken, balance: number) => {
   const { accountId, id } = token;
   try {
-    await db.transaction(async (t) => Accounts.increment(
-      { balance },
-      { where: { id: accountId }, transaction: t }
-    ));
+    await db.transaction(async (t) => {
+      await Accounts.increment(
+        { balance },
+        { where: { id: accountId }, transaction: t }
+      )
+      await Transactions
+        .create(
+          { debitedAccountId: null, creditedAccountId: token.accountId, value: balance },
+          { transaction: t }
+        )
+    });
     return Users.findOne({
       where: { id },
       include: { model: Accounts, as: 'account' },
@@ -67,10 +75,18 @@ const userDepoist = async (token: IToken, balance: number) => {
 const userWithdrawal = async (token: IToken, balance: number) => {
   const { accountId, id } = token;
   try {
-    const withdrawal = await db.transaction(async (t) => Accounts.decrement(
-      { balance },
-      { where: { id: accountId, balance: { [Op.gte]: balance } }, transaction: t }
-    ));
+    const withdrawal = await db.transaction(async (t) => {
+      await Transactions
+        .create(
+          { debitedAccountId: token.accountId, creditedAccountId: null, value: balance },
+          { transaction: t }
+        )
+
+      return Accounts.decrement(
+        { balance },
+        { where: { id: accountId, balance: { [Op.gte]: balance } }, transaction: t }
+      )
+    });
     const check = Number(withdrawal[0][1]);
     if (!check) {
       return {
