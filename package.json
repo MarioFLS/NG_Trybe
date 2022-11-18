@@ -4,8 +4,9 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "test": "jest",
-    "restore": "sequelize-cli db:drop && sequelize-cli db:create && sequelize-cli db:migrate",
+    "test": "DB_TEST=NG_trybe_test jest --detectOpenHandles",
+    "start": "tsc && node ./dist/src/app.js",
+    "restore": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "dev": "nodemon"
   },
   "keywords": [],
