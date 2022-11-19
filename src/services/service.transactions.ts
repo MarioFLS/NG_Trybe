@@ -1,5 +1,7 @@
 import { Op } from 'sequelize'
+import Accounts from '../database/models/accounts';
 import Transactions from '../database/models/transactions'
+import Users from '../database/models/users';
 import ITransaction from '../interfaces/ITransaction';
 
 const transactionType = async <T>(id: number, type: T) => {
@@ -42,8 +44,26 @@ const transactionHistory = async <T>(id: number, type: T, date:string) => {
         [{ debitedAccountId: id },
           { creditedAccountId: id }
         ]
-    }
-  }) as unknown as ITransaction[];
+    },
+    include: [{
+      model: Accounts,
+      as: 'creditedUser',
+      attributes: ['id'],
+      required: false,
+      include: [{
+        model: Users, as: 'user', attributes: ['username'], required: false
+      }]
+    },
+    {
+      model: Accounts,
+      as: 'debitedUser',
+      attributes: ['id'],
+      required: false,
+      include: [{
+        model: Users, as: 'user', attributes: ['username'], required: false
+      }]
+    }]
+  }).catch((e) => console.log(e)) as unknown as ITransaction[];
   if (date) {
     return transactionDate(allTransactions, originalDate)
   }
