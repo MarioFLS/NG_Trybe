@@ -16,7 +16,7 @@ const SECRET = process.env.SECRET || 'chaveMuitoScreteta';
 
 const createUser = async (
   data: ICreateUser
-): Promise<Users | IErrorResponse> => {
+) => {
   const { username, password } = data;
 
   const validate = (await validateCreateUser(data)) as IErrorResponse;
@@ -40,7 +40,11 @@ const createUser = async (
         },
         { transaction: t }
       );
-      return user.toJSON();
+      const { accountId, id } = user as unknown as IUser;
+      const token = jwt.sign({ username, accountId, id }, SECRET, {
+        expiresIn: '24h',
+      });
+      return { token };
     });
   } catch (error) {
     return {

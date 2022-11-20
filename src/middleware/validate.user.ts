@@ -4,6 +4,7 @@ import { compareHashPassword } from '../helpers/hashPassword';
 
 const validateUser = async (req: Request, res: Response, next: NextFunction) => {
   const { username, password } = req.body;
+  console.log(req.body)
   const url = req.url === '/login';
 
   if (!username || !password) {

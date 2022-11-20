@@ -23,8 +23,8 @@ const create = async (
   if (userError?.error) {
     return next(userError);
   }
-  const { id, username } = user as unknown as IUser;
-  return res.status(StatusCodes.CREATED).json({ id, username });
+  const { token } = user as {token:string};
+  return res.status(StatusCodes.OK).json({ token });
 };
 
 const login = async (
