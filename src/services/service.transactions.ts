@@ -4,15 +4,33 @@ import Transactions from '../database/models/transactions'
 import Users from '../database/models/users';
 import ITransaction from '../interfaces/ITransaction';
 
+const include = [{
+  model: Accounts,
+  as: 'creditedUser',
+  attributes: ['id'],
+  required: false,
+  include: [{
+    model: Users, as: 'user', attributes: ['username'], required: false
+  }]
+},
+{
+  model: Accounts,
+  as: 'debitedUser',
+  attributes: ['id'],
+  required: false,
+  include: [{
+    model: Users, as: 'user', attributes: ['username'], required: false
+  }]
+}]
 const transactionType = async <T>(id: number, type: T) => {
   if (type === 'out') {
     return Transactions.findAll({
-      where: { debitedAccountId: id }
+      where: { debitedAccountId: id }, include
     });
   }
   if (type === 'in') {
     return Transactions.findAll({
-      where: { creditedAccountId: id }
+      where: { creditedAccountId: id }, include
     });
   }
 
@@ -28,7 +46,7 @@ const transactionDate = async (historic: ITransaction[], date: Date) => historic
     return false;
   })
 
-const transactionHistory = async <T>(id: number, type: T, date:string) => {
+const transactionHistory = async <T>(id: number, type: T, date: string) => {
   const historicType = await transactionType(id, type) as unknown as ITransaction[];
   const originalDate = new Date(date);
 
@@ -42,27 +60,10 @@ const transactionHistory = async <T>(id: number, type: T, date:string) => {
     where: {
       [Op.or]:
         [{ debitedAccountId: id },
-          { creditedAccountId: id }
+        { creditedAccountId: id }
         ]
     },
-    include: [{
-      model: Accounts,
-      as: 'creditedUser',
-      attributes: ['id'],
-      required: false,
-      include: [{
-        model: Users, as: 'user', attributes: ['username'], required: false
-      }]
-    },
-    {
-      model: Accounts,
-      as: 'debitedUser',
-      attributes: ['id'],
-      required: false,
-      include: [{
-        model: Users, as: 'user', attributes: ['username'], required: false
-      }]
-    }]
+    include
   }).catch((e) => console.log(e)) as unknown as ITransaction[];
   if (date) {
     return transactionDate(allTransactions, originalDate)
