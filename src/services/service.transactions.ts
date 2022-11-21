@@ -64,7 +64,7 @@ const transactionHistory = async <T>(id: number, type: T, date: string) => {
         ]
     },
     include
-  }).catch((e) => console.log(e)) as unknown as ITransaction[];
+  }) as unknown as ITransaction[];
   if (date) {
     return transactionDate(allTransactions, originalDate)
   }

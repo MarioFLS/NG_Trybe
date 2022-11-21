@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 
 const validateTransaction = async (req: Request, res: Response, next: NextFunction) => {
   const { username, value } = req.body;
-  console.log(req.body)
   const url = req.url === '/cashOut';
 
   if (!url) {
