@@ -12,7 +12,7 @@ describe('Teste de Service de Usuário', () => {
   describe('Criar Usuário', () => {
     it('Caso tenha sucesso', async () => {
       const user = await createUser(userOne);
-      expect(user).to.deep.contains.keys('id', 'username');
+      expect(user).to.deep.contains.keys('token');
     });
 
     it('Caso o usuário já exista', async () => {

@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 const port = process.env.APP_PORT || 3005;
 const url = `http://localhost:${port}`
 
-beforeAll(async () =>  shell.exec('npm run restore'))
+beforeAll(async () => shell.exec('npm run restore'))
 
 
 describe("Teste de controller do Usuário ", () => {
@@ -23,20 +23,20 @@ describe("Teste de controller do Usuário ", () => {
     .request(url)
     .post('/login')
     .send(userOne);
-  
-  
+
+
   it("Criando usuário", async () => {
     const response = await chai
       .request(url)
       .post('/')
       .send(userOne);
-    
-      await chai
+
+    await chai
       .request(url)
       .post('/')
       .send(userTwo);
     expect(response).to.have.status(StatusCodes.CREATED);
-    expect(response.body).to.deep.contains({username: "Jorge"});
+    expect(response.body).to.deep.contains.keys("token");
   });
 
   it("Usuário Já existe", async () => {
@@ -44,9 +44,9 @@ describe("Teste de controller do Usuário ", () => {
       .request(url)
       .post('/')
       .send(userOne);
-    
+
     expect(response).to.have.status(StatusCodes.BAD_REQUEST);
-    expect(response.body).to.deep.equal({"message": "Esse usuário já existe."});
+    expect(response.body).to.deep.equal({ "message": "Esse usuário já existe." });
   });
 
   it("Login do usuário", async () => {
@@ -54,7 +54,7 @@ describe("Teste de controller do Usuário ", () => {
       .request(url)
       .post('/login')
       .send(userOne);
-    
+
     expect(response).to.have.status(StatusCodes.OK);
     expect(response.body).to.deep.contains.keys("token");
   });
